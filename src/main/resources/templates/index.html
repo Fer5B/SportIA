@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>SportIA</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="header-container">
+    <header class="header-site">
+        <!-- <div class="hs__img"></div> -->
+        <div class="hs__logo__menu-container">
+            <div class="hs__logo">
+                <img th:src="@{/img/actividades-recreativas.png}" alt="logo">
+                <h1>SportIA</h1>
+            </div>
+            <div class="hs__menu-container">
+                <input type="checkbox" name="btn-menu" id="btn-menu-check">
+                <ul class="menu">
+                    <li class="menu__group"><a href="#empresa" class="menu__link">Empresa</a></li>
+                    <li class="menu__group"><a href="#clases" class="menu__link">Clases</a></li>
+                    <li class="menu__group"><a href="#cobertura" class="menu__link">Cobertura</a></li>
+                    <li class="menu__group"><a href="#contacto" class="menu__link">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div class="content">
+    <section class="header-content">
+        <h1 class="title-1">Clases recreativas y deportivas</h1>
+        <img id="empresa" th:src="@{/img/deportes-recreativos.jpg}">
+        <p><strong>SportIA</strong> pretende brindar clases recreativas y deportivas que ayuden a forjar exelentes momentos
+            generando espacios para el desarrollo de conocimientos y habilidades sin dejar de lado la diversión
+            aprovechando eficazmente el tiempo libre.</p>
+    </section>
+    <hr>
+    <section id="clases">
+        <div id="types-class-container" class="justify-content-around mt-5 gap-5 flex-wrap" style="display: flex;">
+            <div class="type-class text-center">
+                <img id="t-rec" class="img-type-class img-small shadow" style="object-fit: cover;" th:src="@{/img/deportes-recreativos.jpg}">
+                <h2 class="mt-2">Clases Recreativas</h2>
+            </div>
+            <div class="type-class text-center">
+                <img id="t-dep" class="img-type-class img-small shadow" style="object-fit: cover;" th:src="@{/img/deportes-recreativos.jpg}">
+                <h2 class="mt-2">Clases Deportivas</h2>
+            </div>
+        </div>
+    </section>
+    <hr>
+<!--    <section id="cobertura">-->
+<!--        <h2>Ubicación</h2>-->
+<!--        <div class="zona-items">-->
+<!--            <div class="zona-item">-->
+<!--                <h2>Florencio Varela</h2>-->
+<!--                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44077.65770088167!2d-58.27885812642054!3d-34.803639541608476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a329628f552cad%3A0x813d55ba09834999!2sFlorencio%20Varela%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1645474687083!5m2!1ses!2sar" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
+<!--            </div>-->
+<!--            <div class="zona-item">-->
+<!--                <h2>Berazategui</h2>-->
+<!--                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44101.07199858825!2d-58.222362280171254!3d-34.75982994578417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32f348c2fbdbf%3A0x80217bd276933f07!2sBerazategui%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1645474934490!5m2!1ses!2sar" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
+<!--            </div>-->
+<!--            <div class="zona-item">-->
+<!--                <h2>Quilmes</h2>-->
+<!--                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d88182.4932058171!2d-58.2064464200895!3d-34.77821974095896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a32e38e45f5777%3A0x6a86dac21334524f!2sQuilmes%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1645474876343!5m2!1ses!2sar" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+</div>
+
+<footer class="footer">
+    <div class="footer__content">
+        <div id="contacto" class="footer__col ft-col-1">
+            <h2>Contacto</h2>
+        </div>
+        <div class="footer__col ft-col-2">
+            <h2>Col 2</h2>
+        </div>
+        <div class="footer__col ft-col-3">
+            <h2>Col 3</h2>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

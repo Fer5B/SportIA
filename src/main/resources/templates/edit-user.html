@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:switch="${user}">
+    <h2 th:case="null">No user yet!</h2>
+    <div th:case="*">
+        <h2>Editar Usuario</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>DNI</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${user.dni}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.phone}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
