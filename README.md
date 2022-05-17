@@ -1,2 +1,3 @@
 # SportIA
-Sistema Web Java. Maven; Spring Boot; Spring MVC; Thymeleaf; MongoDB.
+Proyecto Aplicación Java Sobre Web. 
+Maven; Spring Boot; Spring MVC; Thymeleaf; MongoDB.
