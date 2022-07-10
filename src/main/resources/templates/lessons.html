@@ -1,10 +1,146 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html" lang="es">
 <head>
-    <title>SportIA - Clases</title>
+    <title>SportIA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' *mercadopago.com">-->
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/lessons.css}">
+
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{https://sdk.mercadopago.com/js/v2}"></script>
+    <script type="text/javascript" th:src="@{/js/sandbox-mp.js}" th:defer></script>
 </head>
 <body>
+    <div class="header-container">
+        <header class="header-site">
+            <!-- <div class="hs__img"></div> -->
+            <div class="hs__logo__menu-container">
+                <div class="hs__logo">
+                    <img th:src="@{/img/logo.png}" alt="logo">
+                    <h1>SportIA</h1>
+                </div>
+                <div class="hs__menu-container">
+                    <input type="checkbox" name="btn-menu" id="btn-menu-check">
+                    <ul class="menu">
+                        <li class="menu__group"><a th:href="@{/#empresa}" class="menu__link" th:text="#{main-menu-option1}"></a></li>
+                        <li class="menu__group"><a href="#" class="menu__link" th:text="#{main-menu-option2}"></a></li>
+                        <li class="menu__group"><a href="#contacto" class="menu__link" th:text="#{main-menu-option3}"></a></li>
+                        <li sec:authorize="isAnonymous()" id="btn-login-container" class="menu__group"><a id="btn-login" th:href="@{/login}" class="menu__link" th:text="#{btn-login}"></a></li>
+                        <li sec:authorize="isAuthenticated()" class="menu__group li-user-autenticated">
+                            <input type="checkbox" name="btn-i-user" id="i-user-check">
+                            <label id="lb-i-user" for="i-user-check"><img th:src="@{/img/user-icon-2.png}" alt="user" class="i-user img-xxs"></label>
+                            <ul class="user-options">
+                                <li id="li-username"> <span id="username" sec:authentication="name"></span> <span sec:authorize="hasRole('ROLE_ADMIN')"> | ADMIN</span></li> <hr>
+                                <li class="menu__group"><a href="#" th:text="#{i-user-option1}"></a></li>
+                                <li class="menu__group"><a href="#" th:text="#{i-user-option2}"></a></li>
+                                <li class="menu__group"><a href="#" th:text="#{i-user-option3}"></a></li>
+                                <hr>
+                                <li class="menu__group"><a th:href="@{/logout}" th:text="#{btn-logout}"></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
 
+    <div class="content" th:switch="${lessons}"> <!--  -->
+        <h2 th:case="null">No hay clases registradas en el sistema!</h2>
+
+        <div class="filter-lessons row my-3 text-center">
+            <!-- Campo de entrada rango horario -->
+            <div class="time-range-filter col p-4">
+                <h3 class="mb-4">Selecciona el rango horario:</h3>
+                <label for="filter-start-time">Hora de inicio</label>
+                <select id="filter-start-time" class="select-time form-select">
+                    <option th:if="${startTime} == null" th:each="time: ${fullTimeRange}" th:text="${time}"></option>
+                    <option th:unless="${startTime} == null" th:each="time, stat: ${fullTimeRange}" th:text="${time}" th:selected=" ${time == startTime} ? true"></option>
+                </select>
+                <label for="filter-end-time">Hora de fin</label>
+                <select id="filter-end-time" class="select-time form-select">
+                    <option th:if="${endTime} == null" th:each="time, stat: ${fullTimeRange}" th:text="${time}" th:selected="${stat.last} ? true"></option>
+                    <option th:unless="${endTime} == null" th:each="time, stat: ${fullTimeRange}" th:text="${time}" th:selected="${time == endTime} ? true"></option>
+                </select>
+                <p id="rt-error" class="field-error filter-error">code-error</p>
+            </div>
+
+            <div class="zone-filter col p-4">
+                <h3 class="mb-4">Selecciona una zona disponible</h3>
+                <label for="select-zone">Elegir zona: </label>
+                <select name="select-zone" id="select-zone" class="form-select" th:switch="cities">
+                    <option>Todas</option>
+                    <option th:each="city: ${cities}" th:text="${city}" th:selected="${city == zone} ? true"></option>
+                </select>
+                <p id="z-error" class="field-error filter-error">code-error</p>
+            </div>
+        </div>
+        <hr>
+        <section id="cursos" th:case="*">
+            <h1 class="type-lessons mb-5" th:if="${type == 'recreational'}" th:attr="data-type=${type}" th:text="#{recreative-lessons}"></h1>
+            <h1 class="type-lessons mb-5" th:unless="${type == 'recreational'}" th:attr="data-type=${type}" th:text="#{sports-lessons}"></h1>
+
+            <div class="cursos-container">
+                <div class="curso-item" th:each="lesson : ${lessons}" th:attr="data-id=${lesson.id.toHexString()}" th:action="@{/classes/create-preference}" method="POST">
+                    <h2 class="item-name" th:text="${lesson.name}"></h2>
+                    <h3>$ <span class="item-price" th:text="${#numbers.formatDecimal(lesson.price, 1, 'POINT', 2, 'COMMA')}"></span>
+                        <hr class="my-2 w-25">
+                        <p class="m-0" style="font-size: small; opacity: 80%">Cuota mensual</p>
+                    </h3>
+                    <ul class="item-description">
+                        <li th:if="${lesson.weekDayNumber == 0}" th:text="|#{day-text}: #{day-0}|"></li>
+                        <li th:if="${lesson.weekDayNumber == 1}" th:text="|#{day-text}: #{day-1}|"></li>
+                        <li th:if="${lesson.weekDayNumber == 2}" th:text="|#{day-text}: #{day-2}|"></li>
+                        <li th:if="${lesson.weekDayNumber == 3}" th:text="|#{day-text}: #{day-3}|"></li>
+                        <li th:if="${lesson.weekDayNumber == 4}" th:text="|#{day-text}: #{day-4}|"></li>
+                        <li th:if="${lesson.weekDayNumber == 5}" th:text="|#{day-text}: #{day-5}|"></li>
+                        <li th:if="${lesson.weekDayNumber == 6}" th:text="|#{day-text}: #{day-6}|"></li>
+
+                        <li th:text="|#{starTime}: ${lesson.startTime}h|"></li>
+                        <li th:with="hours=${(lesson.durationInMinutes / 60)}, minutes=${(lesson.durationInMinutes % 60)}">
+                            <span th:text="#{duration} + ': '"></span>
+                            <span th:if="${hours &lt; 10 and minutes &lt; 10}" th:text="|0${hours}:0${minutes}h|"></span>
+                            <span th:if="${hours &lt; 10 and minutes >= 10}" th:text="|0${hours}:${minutes}h|"></span>
+                            <span th:if="${hours >= 10 and minutes &lt; 10}" th:text="|${hours}:0${minutes}h|"></span>
+                            <span th:if="${hours >= 10 and minutes >= 10}" th:text="|${hours}:${minutes}h|"></span>
+                        </li>
+                        <li> <span th:text="#{enrolled}"></span> :
+                            <span th:if="${lesson.enrolledId == null}" th:text="|0/${lesson.capacity}|"></span>
+                            <span th:unless="${lesson.enrolledId == null}" th:text="|${lesson.enrolledId.size()}/${lesson.capacity}|"></span>
+                        </li>
+                        <li th:text="|#{city}: ${lesson.location.city}|"></li>
+                        <li class="u-ins"></li>
+                    </ul>
+                    <div class="btn-container">
+                        <button sec:authorize="isAnonymous()" class="btn-go" th:text="#{btn-inscription-lesson}"></button>
+                        <div sec:authorize="isAuthenticated()">
+                            <img th:if="${enrolledLessonsId.contains(lesson.id)}" class="img-xxs" th:src="@{/img/thumbsup.png}">
+                            <button th:unless="${enrolledLessonsId.contains(lesson.id)}" class="btn-go" th:text="#{btn-inscription-lesson}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div id="contacto" class="footer__col ft-col-1">
+                <h2 th:text="#{footer-title-col-1}"></h2>
+            </div>
+            <div class="footer__col ft-col-2">
+                <h2 th:text="#{footer-title-col-2}"></h2>
+            </div>
+            <div class="footer__col ft-col-3">
+                <h2></h2>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript" th:src="@{/js/filter-lessons.js}" th:defer></script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+.time-range-filter .tr-filter {margin-right: 30px;}
+
+/*.filter-lessons > div {border: solid;}*/
+.filter-lessons label {margin-right: 10px}
+.filter-lessons select {margin-right: 20px; display: inline !important;}
+
+/*.time-range-filter p {font-weight: 700; font-size: 25px}*/
+.filter-lessons .select-time {width: 100px;}
+
+.filter-lessons #select-zone {width: 200px}
+
+.btn-filter {
+    padding: 5px 20px;
+    background-color: var(--header-bg);
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: large;
+    border: transparent solid;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.btn-filter:hover {
+    background-color: whitesmoke;
+    border-color: var(--header-bg);
+    color: var(--header-bg);
+}

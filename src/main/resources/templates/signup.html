@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>SportIA - Registro</title>
+    <title th:text="#{title-signup}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/form.js}"></script>
 </head>
 <body>
-
+    <div class="login-container">
+        <h1 th:text="#{title-signup}"></h1>
+        <form class="form-n" th:object="${user}" th:action="@{/signup}" method="post" enctype="utf8">
+            <div class="row">
+                <div class="form-field col">
+                    <input type="text" id="name" name="name" autofocus="autofocus" th:field="${user.name}" th:placeholder="#{name-placeholder}"/>
+                    <p class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                </div>
+                <div class="form-field col">
+                    <input type="text" id="lastName" name="lastName" th:field="${user.lastName}" th:placeholder="#{lastname-placeholder}"/>
+                    <p class="field-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-field col">
+                    <input type="email" id="email" name="email" th:field="${user.email}" th:placeholder="#{email-placeholder}"/>
+                    <p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-field col">
+                    <input type="password" id="password" name="password" th:field="${user.password}" th:placeholder="#{password-placeholder}"/>
+                    <p class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-field col">
+                    <input type="password" id="matching-password" name="matching-password" th:field="*{matchingPassword}" th:placeholder="#{matching-password-placeholder}"/>
+                    <p class="field-error" th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}"></p>
+                </div>
+            </div>
+            <input type="submit" th:value="#{btn-signup}" />
+            <a class="d-block" th:href="@{/login}" th:text="#{btn-login}"></a>
+        </form>
+    </div>
 </body>
 </html>

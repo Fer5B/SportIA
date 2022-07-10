@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{email.inscription.title}"></title>
+</head>
+<body >
+<div>
+    <div class="mb-3">
+        <h1 th:text="#{email.inscription.title}"></h1>
+        <hr>
+        <h2 th:if="${type == 'RECREATIONAL'}" th:text="|#{recreative-lessons} - ${data.lesson.name}|"></h2>
+        <h2 th:unless="${type == 'RECREATIONAL'}" th:text="|#{sports-lessons} - ${data.lesson.name}|"></h2>
+    </div>
+    <div>
+        <h3 th:if="${data.lesson.weekDayNumber == 0}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-0}, ${data.lesson.startTime})}"></h3>
+        <h3 th:if="${data.lesson.weekDayNumber == 1}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-1}, ${data.lesson.startTime})}"></h3>
+        <h3 th:if="${data.lesson.weekDayNumber == 2}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-2}, ${data.lesson.startTime})}"></h3>
+        <h3 th:if="${data.lesson.weekDayNumber == 3}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-3}, ${data.lesson.startTime})}"></h3>
+        <h3 th:if="${data.lesson.weekDayNumber == 4}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-4}, ${data.lesson.startTime})}"></h3>
+        <h3 th:if="${data.lesson.weekDayNumber == 5}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-5}, ${data.lesson.startTime})}"></h3>
+        <h3 th:if="${data.lesson.weekDayNumber == 6}" th:text="#{email.inscription.message(${data.lesson.name}, #{day-6}, ${data.lesson.startTime})}"></h3>
+        <h3 th:text="'Precio: $ ' + ${#numbers.formatDecimal(data.lesson.price, 1, 'POINT', 2, 'COMMA')} "></h3>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -2,7 +2,8 @@
     --bg-site: whitesmoke;
     --header-height: 100px;
     --header-bg: #4d86d1;
-    --footer-height: 200px
+    --footer-height: 200px;
+    --btn-go-height: 50px
 }
 
 /* 
@@ -57,7 +58,6 @@ h2, .h2 {
     font-size: calc(1.625rem + 0.9vw);
 }
 
-
 /* 
     HEADER */
 .header-container {
@@ -88,7 +88,7 @@ h2, .h2 {
     padding: 5px 20px;
     display: flex;
     align-items: center;
-    /* background-color: blueviolet; */
+    /*border: solid greenyellow;*/
 }
 
 .hs__logo {
@@ -107,7 +107,7 @@ h2, .h2 {
     object-fit: contain;
     margin-right: 20px;
     border-radius: 50%;
-    background-color: white;
+    /*background-color: white;*/
     /*border: solid red;*/
 }
 
@@ -129,7 +129,7 @@ h2, .h2 {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    /* border: solid; */
+     /*border: solid;*/
 }
 
 .menu__group {
@@ -168,9 +168,84 @@ a.pt {
     /* border: solid; */
 }
 
+.error {
+    color: darkred;
+}
+
+.filter-error {
+    visibility: hidden;
+}
+
 #btn-menu-check {
     display: none;
 }
+
+.main-container {
+    width: 100%;
+    height: 100%;
+}
+
+.li-user-autenticated {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.i-user {
+    border-radius: 50%;
+}
+
+.user-options {
+    position: absolute;
+    display: none;
+    width: 250px;
+    list-style: none;
+    padding: 0;
+    top: calc(100% + 10px);
+    right: 10px;
+    border-radius: 20px;
+    box-shadow: rgba(0,0,0,.25) 0 2px 6px 1px;
+    background-color: white;
+}
+
+.user-options li {
+    width: 100%;
+    padding: 20px;
+    transition: all .3s;
+}
+
+.user-options li, .user-options li * {
+    color: var(--header-bg);
+}
+
+.user-options li:hover:not(:first-child) {
+    background-color: var(--header-bg);
+}
+.user-options li:hover a {
+    color: whitesmoke;
+}
+
+.user-options li:first-child {
+    border-radius: 20px 20px 0 0; /* arriba-izq | arriba-der | abajo-der | abajo-izq */
+    cursor: default;
+}
+.user-options li:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+.user-options li hr {width: 90%; margin: 2px auto}
+
+#i-user-check {
+    display: none;
+}
+
+#i-user-check:checked ~ .user-options {
+    display: block;
+}
+
+#lb-i-user {cursor: pointer}
 
 /* 
     FOOTER GRID */
@@ -285,6 +360,10 @@ table[itemprop="openingHours"] .hda-day {text-align: left; padding-right: 20px;}
 
 /* 
     CURSOS */
+#cursos h1 {
+    text-align: center;
+}
+
 .cursos-container {
     width: 80%; 
     margin: 20px auto; 
@@ -294,26 +373,39 @@ table[itemprop="openingHours"] .hda-day {text-align: left; padding-right: 20px;}
     flex-wrap: wrap; 
     column-gap: 50px; 
     row-gap: 50px;
-    /* border: solid orangered;  */
+    /*border: solid orangered;*/
 }
 
 .curso-item {
-    width: 300px; 
-    height: 250px; 
-    padding: 5px; 
+    width: 300px;
+    padding: 5px;
+    padding-bottom: calc(var(--btn-go-height) + 20px);
+    position: relative;
     box-shadow: rgba(0, 0, 0, .35) 0 4px 7px 2px; 
     border-radius: 20px;
 }
 
 .curso-item h2 {
     width: 100%; 
-    height: 20%; 
-    border-bottom: solid; 
+    min-height: 20%;
+    border-bottom: solid 1px rgb(91,91,91);
     display: flex; 
     align-items: center; 
-    justify-content: center; 
-    font-size: large; 
-    font-weight: 700;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding: 15px 10px 20px;
+}
+
+.curso-item h3 {
+    text-align: center;
+    border-bottom: solid 1px rgb(91,91,91);
+    padding: 20px;
+}
+
+.item-description {
+    list-style: none;
 }
 
 /*
@@ -364,6 +456,55 @@ table[itemprop="openingHours"] .hda-day {text-align: left; padding-right: 20px;}
     width: 20px;
     height: 20px;
 }
+
+/*
+    BUTTONS */
+#btn-login {
+    margin-left: 20px;
+    background-color: #0a58ca;
+    color: white;
+    font-weight: bold;
+    border: none;
+    transition: all .3s;
+}
+
+#btn-login:hover {
+    background-color: whitesmoke;
+    color: #0a58ca;
+    box-shadow: rgba(0,0,0,.35) 0px 5px 8px 1px;
+}
+
+.btn-container {
+    width: calc(100% - 10px);
+    position: absolute;
+    text-align: center;
+    bottom: 10px;
+}
+.btn-go {
+    margin: auto;
+    border: none;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    background-color: #66A182;
+    transition: all .3s;
+}
+
+.btn-go:hover {
+    letter-spacing: 2px;
+}
+
+
+/*temp*/
+
+/*end temp*/
+
+
 
 /*
   QUERIES */
