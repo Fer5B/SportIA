@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>SportIA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
 
@@ -21,13 +20,13 @@
             <div class="hs__menu-container">
                 <input type="checkbox" name="btn-menu" id="btn-menu-check">
                 <ul class="menu">
-                    <li class="menu__group"><a href="#empresa" class="menu__link" th:text="#{main-menu-option1}"></a></li>
-                    <li class="menu__group"><a href="#clases" class="menu__link" th:text="#{main-menu-option2}"></a></li>
-                    <li class="menu__group"><a href="#contacto" class="menu__link" th:text="#{main-menu-option3}"></a></li>
+                    <li class="menu__group"><a href="#company" class="menu__link" th:text="#{main-menu-option1}"></a></li>
+                    <li class="menu__group"><a href="#classes" class="menu__link" th:text="#{main-menu-option2}"></a></li>
+                    <li class="menu__group"><a href="#contact" class="menu__link" th:text="#{main-menu-option3}"></a></li>
                     <li sec:authorize="isAnonymous()" id="btn-login-container" class="menu__group"><a id="btn-login" th:href="@{/login}" class="menu__link" th:text="#{btn-login}"></a></li>
                     <li sec:authorize="isAuthenticated()" class="menu__group li-user-autenticated">
                         <input type="checkbox" name="btn-i-user" id="i-user-check">
-                        <label id="lb-i-user" for="i-user-check"><img th:src="@{/img/user-icon-2.png}" alt="user" class="i-user img-xxs"></label>
+                        <label id="lb-i-user" for="i-user-check"><img th:src="@{/img/user-icon.png}" alt="user" class="i-user img-xxs"></label>
                         <ul class="user-options">
                             <li id="li-username"> <span sec:authentication="name"></span> <span sec:authorize="hasRole('ROLE_ADMIN')"> | ADMIN</span></li> <hr>
                             <li class="menu__group"><a href="#" th:text="#{i-user-option1}"></a></li>
@@ -46,11 +45,11 @@
 <div class="content">
     <section class="header-content">
         <h1 class="title-1" th:text="#{title-home}"></h1>
-        <img id="empresa" th:src="@{/img/recreational-and-sports-classes.jpg}">
+        <img id="company" th:src="@{/img/recreational-and-sports-classes.jpg}">
         <p><strong th:text="#{company-name}"></strong> <span th:text="#{company-description}"></span></p>
     </section>
     <hr>
-    <section id="clases">
+    <section id="classes">
         <div id="types-class-container" class="justify-content-around mt-5 gap-5 flex-wrap" style="display: flex;">
             <div class="type-class text-center">
                 <a th:href="@{/classes/{type}(type=recreational)}">
@@ -70,7 +69,7 @@
 
 <footer class="footer">
     <div class="footer__content">
-        <div id="contacto" class="footer__col ft-col-1">
+        <div id="contact" class="footer__col ft-col-1">
             <h2 th:text="#{footer-title-col-1}"></h2>
         </div>
         <div class="footer__col ft-col-2">

@@ -27,9 +27,9 @@ public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuth
                 response.sendRedirect("/dashboard");
             }
             else{
-                response.sendRedirect(request.getContextPath());
+//                response.sendRedirect(request.getContextPath());
 //                Redirecciona al usuario a la página que quería ir o a la página segura antes de iniciar sesión
-//                super.onAuthenticationSuccess(request, response, authentication);
+                super.onAuthenticationSuccess(request, response, authentication);
             }
         }
     }

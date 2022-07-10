@@ -38,7 +38,7 @@ public class CheckoutProMPService implements MPService {
             return ResponseEntity.badRequest().body("No hay items");
         }
 
-        addCredetials();
+        addAccessToken();
         PreferenceClient preferenceClient = new PreferenceClient();
         String notifyBaseUrl = "localhost:9191/classes/" + preferenceDTO.getCategory();
         String sussessUrl = notifyBaseUrl + "/successful-payment";
@@ -90,8 +90,8 @@ public class CheckoutProMPService implements MPService {
 
 
 
-    private void addCredetials(){
-        MercadoPagoConfig.setAccessToken("TEST-3692188093513616-052622-867babf0737a25afe0c5557a85d10b85-246631381");
+    private void addAccessToken(){
+        MercadoPagoConfig.setAccessToken("ACCESS_TOKEN");
     }
 
 }

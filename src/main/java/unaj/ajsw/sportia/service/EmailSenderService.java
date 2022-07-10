@@ -2,10 +2,7 @@ package unaj.ajsw.sportia.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 import unaj.ajsw.sportia.dto.DataMail;
-import unaj.ajsw.sportia.dto.DataMailInscription;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,22 +16,20 @@ import javax.mail.internet.MimeMultipart;
 @Service("emailSenderService")
 public class EmailSenderService {
     private final Properties properties = new Properties();
-    private final TemplateEngine templateEngine;
 
     private String password;
     private Session session;
 
-    public EmailSenderService(TemplateEngine templateEngine){
-        this.templateEngine = templateEngine;
-    }
+    public EmailSenderService(){}
 
     private void init() {
 
-        properties.put("mail.smtp.host", "ca8.toservers.com");
-        properties.put("mail.smtp.starttls.enable", "false");
+        properties.put("mail.smtp.host", "server.com");
+        properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.port", 26);
-        properties.put("mail.smtp.sender", "web@c3l.com.ar");
-        properties.put("mail.smtp.user", "web@c3l.com.ar");
+        properties.put("mail.smtp.sender", "sender@email.com");
+        properties.put("mail.smtp.user", "sender@email.com");
+        properties.put("mail.smtp.password", password);
         properties.put("mail.smtp.auth", "true");
 
         session = Session.getDefaultInstance(properties);
@@ -59,7 +54,7 @@ public class EmailSenderService {
             message.setContent(multipart);
 
             Transport t = session.getTransport("smtp");
-            t.connect((String)properties.get("mail.smtp.user"), "Zaxy3019#$.91ku");
+            t.connect((String)properties.get("mail.smtp.user"), (String)properties.get("mail.smtp.password"));
             message.saveChanges();
             t.sendMessage(message, message.getAllRecipients());
             t.close();

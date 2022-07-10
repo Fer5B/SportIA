@@ -3,7 +3,6 @@
       xmlns="http://www.w3.org/1999/html" lang="es">
 <head>
     <title>SportIA</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' *mercadopago.com">-->
 
@@ -27,13 +26,13 @@
                 <div class="hs__menu-container">
                     <input type="checkbox" name="btn-menu" id="btn-menu-check">
                     <ul class="menu">
-                        <li class="menu__group"><a th:href="@{/#empresa}" class="menu__link" th:text="#{main-menu-option1}"></a></li>
+                        <li class="menu__group"><a th:href="@{/#company}" class="menu__link" th:text="#{main-menu-option1}"></a></li>
                         <li class="menu__group"><a href="#" class="menu__link" th:text="#{main-menu-option2}"></a></li>
-                        <li class="menu__group"><a href="#contacto" class="menu__link" th:text="#{main-menu-option3}"></a></li>
+                        <li class="menu__group"><a href="#contact" class="menu__link" th:text="#{main-menu-option3}"></a></li>
                         <li sec:authorize="isAnonymous()" id="btn-login-container" class="menu__group"><a id="btn-login" th:href="@{/login}" class="menu__link" th:text="#{btn-login}"></a></li>
                         <li sec:authorize="isAuthenticated()" class="menu__group li-user-autenticated">
                             <input type="checkbox" name="btn-i-user" id="i-user-check">
-                            <label id="lb-i-user" for="i-user-check"><img th:src="@{/img/user-icon-2.png}" alt="user" class="i-user img-xxs"></label>
+                            <label id="lb-i-user" for="i-user-check"><img th:src="@{/img/user-icon.png}" alt="user" class="i-user img-xxs"></label>
                             <ul class="user-options">
                                 <li id="li-username"> <span id="username" sec:authentication="name"></span> <span sec:authorize="hasRole('ROLE_ADMIN')"> | ADMIN</span></li> <hr>
                                 <li class="menu__group"><a href="#" th:text="#{i-user-option1}"></a></li>
@@ -129,7 +128,7 @@
 
     <footer class="footer">
         <div class="footer__content">
-            <div id="contacto" class="footer__col ft-col-1">
+            <div id="contact" class="footer__col ft-col-1">
                 <h2 th:text="#{footer-title-col-1}"></h2>
             </div>
             <div class="footer__col ft-col-2">
