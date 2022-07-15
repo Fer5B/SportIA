@@ -41,11 +41,6 @@ public class MPSandboxController {
     private InsctiptionService insctiptionService;
 
 
-//    @PostMapping(value = "/classes/create-preference", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity createPreference(@RequestBody PreferenceDTO preferenceDTO) throws MPException, MPApiException {
-//        return mpService.createPreference(preferenceDTO);
-//    }
-
     @PostMapping(value = "/classes/create-preference", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createPreference(@RequestBody String preferenceDTO) throws MPException, MPApiException {
         this.preferenceDTO = new Gson().fromJson(preferenceDTO, PreferenceDTO.class);
@@ -53,11 +48,11 @@ public class MPSandboxController {
         return mpService.createPreference(this.preferenceDTO);
     }
 
-    @GetMapping("/classes/{type}/successful-payment")
+    @GetMapping({"/classes/{type}/successful-payment", "/classes/{type}/pending-payment"})
     public String successfulPayment(@PathVariable String type, @RequestParam String status, @RequestParam String external_reference,
                                     @RequestParam String payment_type, @RequestParam String merchant_order_id,
                                     @RequestParam String preference_id) {
-//        recibo MpPayment parametros y preference_id -> https://api.mercadopago.com/checkout/preferences/{id}
+//        recibo MpPayment parámetros y preference_id -> https://api.mercadopago.com/checkout/preferences/{id}
 
         insctiptionService.saveInscription(
                 Inscription.builder()
@@ -88,38 +83,6 @@ public class MPSandboxController {
 
         lesson.getEnrolledId().add(preferenceDTO.getPayer().getId());
         ls.saveLesson(lesson);
-
-        return "redirect:/classes/"+type;
-    }
-
-    @GetMapping("/classes/{type}/pending-payment")
-    public String pendingPayment(Model model, @PathVariable String type, @RequestParam String status, @RequestParam String external_reference,
-                                 @RequestParam String payment_type, @RequestParam String merchant_order_id,
-                                 @RequestParam String preference_id) {
-
-        insctiptionService.saveInscription(
-                Inscription.builder()
-                        .lessonId(new ObjectId(preferenceDTO.getLessonId()))
-                        .userId(preferenceDTO.getPayer().getId())
-                        .payment(MpPayment.builder()
-                                .status(status)
-                                .external_reference(external_reference)
-                                .payment_type(payment_type)
-                                .merchant_order_id(merchant_order_id)
-                                .preference_id(preference_id)
-                                .build())
-                        .timestamp(LocalDateTime.now())
-                        .build()
-        );
-
-        Lesson lesson = ls.findLessonById(preferenceDTO.getLessonId());
-        insctiptionService.sendEmail(
-                DataMailInscription.builder()
-                        .senderEmail(preferenceDTO.getPayer().getEmail())
-                        .title(messages.getProperty("email.inscription.title"))
-                        .lesson(lesson)
-                        .build()
-        );
 
         return "redirect:/classes/"+type;
     }

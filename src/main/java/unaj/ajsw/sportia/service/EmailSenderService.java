@@ -37,12 +37,11 @@ public class EmailSenderService {
 
     public ResponseEntity sendEmail(DataMail dataMail, List<File> attachedFiles){
 
-        init();
         try{
+            init();
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress((String)properties.get("mail.smtp.sender")));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(dataMail.getSenderEmail()));
-//            message.addRecipient(Message.RecipientType.BCC, new InternetAddress("bcc@mail.com"));
             message.setSubject(dataMail.getTitle());
 
 //            make body message
