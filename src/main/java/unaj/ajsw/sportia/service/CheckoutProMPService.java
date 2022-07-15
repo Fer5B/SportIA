@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.common.AddressRequest;
+import com.mercadopago.client.common.IdentificationRequest;
 import com.mercadopago.client.common.PhoneRequest;
 import com.mercadopago.client.preference.*;
 import com.mercadopago.exceptions.MPApiException;
@@ -12,6 +13,7 @@ import com.mercadopago.exceptions.MPException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import unaj.ajsw.sportia.dto.PreferenceDTO;
+import unaj.ajsw.sportia.model.Location;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -49,14 +51,14 @@ public class CheckoutProMPService implements MPService {
 //                Add payer
                 .payer(PreferencePayerRequest.builder()
                         .name(preferenceDTO.getPayer().getName())
+                        .identification(IdentificationRequest.builder()
+                                .type("DNI")
+                                .number(String.valueOf(preferenceDTO.getPayer().getDni()))
+                                .build())
                         .surname(preferenceDTO.getPayer().getLastName())
                         .email(preferenceDTO.getPayer().getEmail())
                         .phone(PhoneRequest.builder().number(preferenceDTO.getPayer().getPhone()).build())
-                        .address(AddressRequest.builder()
-                                .streetName(preferenceDTO.getPayer().getLocation().getStreet())
-                                .streetNumber(String.valueOf(preferenceDTO.getPayer().getLocation().getNumber()))
-                                .zipCode(preferenceDTO.getPayer().getLocation().getZipCode())
-                                .build())
+                        .address(getPayerAddress(preferenceDTO.getPayer().getLocation()))
                         .build())
 //                Add items
                 .items(preferenceDTO.getItems().stream().map(i -> {
@@ -87,7 +89,16 @@ public class CheckoutProMPService implements MPService {
         return ResponseEntity.ok(preference);
     }
 
+    private AddressRequest getPayerAddress(Location location) {
+        if(location != null)
+            return AddressRequest.builder()
+                        .streetName(location.getStreet())
+                        .streetNumber(String.valueOf(location.getNumber()))
+                        .zipCode(location.getZipCode())
+                        .build();
 
+        return null;
+    }
 
 
     private void addAccessToken(){

@@ -1,9 +1,5 @@
 package unaj.ajsw.sportia.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,7 +17,6 @@ import unaj.ajsw.sportia.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Locale;
 
 @Controller
 public class LoginController {
@@ -30,8 +25,6 @@ public class LoginController {
     @Resource(name = "userService")
     private UserService userService;
 
-//    @Autowired
-//    private MessageSource messageSource;
 
     @GetMapping("/login")
     public ModelAndView login() {
@@ -39,14 +32,6 @@ public class LoginController {
         modelAndView.setViewName("login");
         return modelAndView;
     }
-
-//    @PostMapping("perform_login")
-//    public ModelAndView perform_login(@RequestBody DataUserLogin dataUser) {
-//        userService.loadUserByUsername(dataUser.getEmail());
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("index");
-//        return modelAndView;
-//    }
 
     @GetMapping("/signup")
     public ModelAndView signup(){
